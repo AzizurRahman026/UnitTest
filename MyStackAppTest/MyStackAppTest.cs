@@ -1,25 +1,17 @@
-﻿using MyStackApp;
+﻿using System.Threading.Channels;
+using MyStackApp;
 using NUnit.Framework;
 
 namespace MyStackAppTest
 {
     [TestFixture]
-
     public class MyStackAppTest
     {
         [Test]
         public async Task IsEmpty()
         {
             var stack = new MyStackApp<int>();
-            if (stack.IsEmpty())
-            {
-                Console.WriteLine("Stack is Empty");
-            }
-            else
-            {
-                throw new Exception("Stack is not empty...");
-            }
-            // Assert.IsTrue(stack.IsEmpty());
+            Assert.IsTrue(stack.IsEmpty());
         }
 
         [Test]
@@ -27,17 +19,8 @@ namespace MyStackAppTest
         {
             var stack = new MyStackApp<int>();
             stack.Push(1);
-            if (stack.IsEmpty())
-            {
-                throw new Exception("Stack shouldn't be empty...");
-            }
-            if (stack.Size() != 1)
-            {
-                throw new Exception("Stack Size must be 1");
-            }
-
-            /*Assert.IsFalse(stack.IsEmpty());
-            Assert.AreEqual(1, stack.Size());*/
+            Assert.IsFalse(stack.IsEmpty());
+            Assert.AreEqual(1, stack.Size());
         }
 
         [Test]
@@ -48,16 +31,8 @@ namespace MyStackAppTest
             stack.Push(2);
             stack.Push(3);
 
-            if (stack.IsEmpty())
-            {
-                throw new Exception("Stack shouldn't be empty...");
-            }
-            if (stack.Size() != 3)
-            {
-                throw new Exception("Stack Size must be 3");
-            }
-            /*Assert.IsFalse(stack.IsEmpty());
-            Assert.AreEqual(3, stack.Size());*/
+            Assert.IsFalse(stack.IsEmpty());
+            Assert.AreEqual(3, stack.Size());
         }
 
         [Test]
@@ -69,16 +44,67 @@ namespace MyStackAppTest
             stack.Push(3);
             stack.Pop();
 
-            if (stack.IsEmpty())
+            Assert.IsFalse(stack.IsEmpty());
+            Assert.AreEqual(2, stack.Size());
+        }
+
+        [Test]
+        public async Task PushPopAndVerifyTheStackIsEmpty()
+        {
+            var person = new Person("Abdul", true);
+            var stack = new MyStackApp<Person>();
+            stack.Push(person);
+            stack.Pop();
+            Assert.IsTrue(stack.IsEmpty());
+            Assert.AreEqual(0, stack.Size());
+        }
+
+        [Test]
+        public async Task PushPopAndVerify()
+        {
+            var pushPerson = new Person("Aziz", true);
+            var stack = new MyStackApp<Person>();
+            stack.Push(pushPerson);
+            var popPerson = await stack.Pop();
+            Console.WriteLine(popPerson.Name, popPerson.IsGraduated);
+            Assert.AreEqual(pushPerson, popPerson);
+        }
+
+        [Test]
+        public async Task PushThreePopThreeAndVerify()
+        {
+            List<Person> pushItem = new List<Person>();
+            pushItem.Add(new Person("A", true));
+            pushItem.Add(new Person("B", true));
+            pushItem.Add(new Person("C", false));
+
+            var stack = new MyStackApp<Person>();
+
+            for (int i = 0; i < 3; ++i)
             {
-                throw new Exception("Stack shouldn't be empty...");
+                stack.Push(pushItem[i]);
             }
-            if (stack.Size() != 2)
+
+            List<Person> popItem = new List<Person>();
+
+
+            for (int i = 0; i < 3; ++i)
             {
-                throw new Exception("Stack Size must be 2");
+                popItem.Add(await stack.Pop());
             }
-            /*Assert.IsFalse(stack.IsEmpty());
-            Assert.AreEqual(2, stack.Size());*/
+
+            for (int i = 0; i < 3; ++i) // A B C => C B A
+            {
+                Console.WriteLine(pushItem[i].Name + " " + popItem[3-i-1].Name);
+                Assert.AreEqual(pushItem[i], popItem[3-i-1]);
+            }
+        }
+
+        [Test]
+        public async void PopAndUnderFlowTest()
+        {
+            var stack = new MyStackApp<int>();
+            Assert.Throws<InvalidOperationException>(async()=>await stack.Pop());
         }
     }
 }
