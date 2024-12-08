@@ -1,0 +1,12 @@
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\bin\Debug\net8.0\MyStackApp.deps.json
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\bin\Debug\net8.0\MyStackApp.dll
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\bin\Debug\net8.0\MyStackApp.pdb
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.AssemblyInfoInputs.cache
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.AssemblyInfo.cs
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.csproj.CoreCompileInputs.cache
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.sourcelink.json
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.dll
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\refint\MyStackApp.dll
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\MyStackApp.pdb
+C:\Users\azizur\Learn\dotNet\MyStackApp\MyStackApp\obj\Debug\net8.0\ref\MyStackApp.dll
