@@ -1,5 +1,4 @@
-﻿using System.Threading.Channels;
-using MyStackApp;
+﻿using MyStackApp;
 using NUnit.Framework;
 
 namespace MyStackAppTest
@@ -11,6 +10,7 @@ namespace MyStackAppTest
         public async Task IsEmpty()
         {
             var stack = new MyStackApp<int>();
+
             Assert.IsTrue(stack.IsEmpty());
         }
 
@@ -18,7 +18,9 @@ namespace MyStackAppTest
         public async Task PushOneItem()
         {
             var stack = new MyStackApp<int>();
+
             stack.Push(1);
+
             Assert.IsFalse(stack.IsEmpty());
             Assert.AreEqual(1, stack.Size());
         }
@@ -27,6 +29,7 @@ namespace MyStackAppTest
         public async Task PushThreeItem()
         {
             var stack = new MyStackApp<int>();
+
             stack.Push(1);
             stack.Push(2);
             stack.Push(3);
@@ -39,6 +42,7 @@ namespace MyStackAppTest
         public async Task PushThreePopOne()
         {
             var stack = new MyStackApp<int>();
+
             stack.Push(1);
             stack.Push(2);
             stack.Push(3);
@@ -51,10 +55,12 @@ namespace MyStackAppTest
         [Test]
         public async Task PushPopAndVerifyTheStackIsEmpty()
         {
-            var person = new Person("Abdul", true);
             var stack = new MyStackApp<Person>();
+            var person = new Person("Abdul", true);
+
             stack.Push(person);
             stack.Pop();
+
             Assert.IsTrue(stack.IsEmpty());
             Assert.AreEqual(0, stack.Size());
         }
@@ -62,11 +68,14 @@ namespace MyStackAppTest
         [Test]
         public async Task PushPopAndVerify()
         {
-            var pushPerson = new Person("Aziz", true);
             var stack = new MyStackApp<Person>();
+            var pushPerson = new Person("Aziz", true);
+
             stack.Push(pushPerson);
             var popPerson = await stack.Pop();
-            Console.WriteLine(popPerson.Name, popPerson.IsGraduated);
+
+
+            Console.WriteLine(pushPerson.Name, popPerson.IsGraduated);
             Assert.AreEqual(pushPerson, popPerson);
         }
 
@@ -101,10 +110,50 @@ namespace MyStackAppTest
         }
 
         [Test]
-        public async void PopAndUnderFlowTest()
+        public async Task PopAndUnderFlowTest()
         {
             var stack = new MyStackApp<int>();
-            Assert.Throws<InvalidOperationException>(async()=>await stack.Pop());
+
+            var ex = Assert.ThrowsAsync<UnderflowException>(() => stack.Pop());
+
+            Assert.AreEqual("Stack underflow: Cannot pop from an empty stack.", ex.Message);
+        }
+
+        [Test]
+        public async Task PushCallTopAndVerifyNotEmpty()
+        {
+            var stack = new MyStackApp<Person>();
+
+            var pushPerson = new Person("A", true);
+            stack.Push(pushPerson);
+
+            var topValue = stack.Top();
+
+            Assert.IsFalse(stack.IsEmpty());
+        }
+
+        [Test]
+        public async Task PushTopAndVerify()
+        {
+            var stack = new MyStackApp<Person>();
+            var pushPerson = new Person("Aziz", true);
+
+            stack.Push(pushPerson);
+            var topPerson = await stack.Top();
+
+
+            Console.WriteLine(pushPerson.Name, topPerson.IsGraduated);
+            Assert.AreEqual(pushPerson, topPerson);
+        }
+
+        [Test]
+        public async Task CallTopAndUnderFlowTest()
+        {
+            var stack = new MyStackApp<int>();
+
+            var ex = Assert.ThrowsAsync<UnderflowException>(() => stack.Top());
+
+            Assert.AreEqual("Stack underflow: Cannot return top.Because empty stack.", ex.Message);
         }
     }
 }

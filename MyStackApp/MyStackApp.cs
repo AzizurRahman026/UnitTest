@@ -22,11 +22,21 @@
         {
             if (Items.Count == 0)
             {
-                throw new InvalidOperationException("Stack underflow");
+                throw new UnderflowException("Stack underflow: Cannot pop from an empty stack.");
             }
             var obj = Items[Items.Count - 1];
             Items.RemoveAt(Items.Count - 1);
             return obj;
+        }
+
+        public async Task<T> Top()
+        {
+
+            if (Items.Count == 0)
+            {
+                throw new UnderflowException("Stack underflow: Cannot return top.Because empty stack.");
+            }
+            return Items[Items.Count - 1];
         }
 
     }
